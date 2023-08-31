@@ -1,2 +1,2 @@
-# ICCS-Cam
-Tutorials for ICCS Cambridge
+# Colab
+Tutorials to run in google colab
