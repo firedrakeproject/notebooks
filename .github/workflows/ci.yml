@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "0 0 * * WED"
+  workflow_dispatch:
+
+jobs:
+  test_colab:
+    uses: fem-on-colab/open-in-colab-workflow/.github/workflows/workflow_call.yml@main
+    with:
+      work_directory: notebooks_copy
+      notebook_pattern: "**/*.ipynb"
+      notebook_preparation: |
+        rsync -avz --include="*.ipynb" --exclude="*" . notebooks_copy/
+      test_script: |
+        python3 -m pytest --nbval notebooks_copy
+      publish_on: artifact@notebooks
+
+  warn:
+    runs-on: ubuntu-latest
+    if: github.repository == 'firedrakeproject/notebooks' && github.ref == 'refs/heads/main' && github.event_name == 'schedule'
+    steps:
+      - name: Warn if scheduled workflow is about to be disabled
+        uses: fem-on-colab/warn-workflow-about-to-be-disabled-action@main
+        with:
+          workflow-filename: ci.yml
+          days-elapsed: 50

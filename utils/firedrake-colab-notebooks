@@ -25,7 +25,7 @@ colab_cell = nbformat.notebooknode.NotebookNode({
     'source': '''try:
     import firedrake
 except ImportError:
-    !wget "https://fem-on-colab.github.io/releases/firedrake-install-real.sh" -O "/tmp/firedrake-install.sh" && bash "/tmp/firedrake-install.sh"
+    !wget "https://fem-on-colab.github.io/releases/firedrake-install-release-real.sh" -O "/tmp/firedrake-install.sh" && bash "/tmp/firedrake-install.sh"
     import firedrake'''
 })
 
