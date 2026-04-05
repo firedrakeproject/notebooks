@@ -15,10 +15,11 @@ jobs:
   test_colab:
     uses: fem-on-colab/open-in-colab-workflow/.github/workflows/workflow_call.yml@main
     with:
+      source_directory: notebooks
       work_directory: notebooks_copy
       notebook_pattern: "**/*.ipynb"
       notebook_preparation: |
-        rsync -avz --include="*.ipynb" --exclude="*" . notebooks_copy/
+        rsync -avz --include="*.ipynb" --exclude="*" notebooks/ notebooks_copy/
       test_script: |
         python3 -m pytest --nbval notebooks_copy
       publish_on: artifact@notebooks
