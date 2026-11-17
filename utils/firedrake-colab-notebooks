@@ -34,10 +34,13 @@ for filename in args.files:
     notebook = nbformat.read(filename, nbformat.NO_CONVERT)
     notebook['cells'] = [colab_cell] + notebook['cells']
 
-    for cell in notebook['cells']:
+    for ic, cell in enumerate(notebook['cells']):
         if cell["cell_type"] == "code":
             cell["outputs"] = []
             cell["execution_count"] = None
+
+        # assign each cell a unique ID to avoid spurious git conflicts
+        cell["id"] = str(ic)
 
         if "%matplotlib" in cell['source']:
             cell["source"] = "\n".join(
